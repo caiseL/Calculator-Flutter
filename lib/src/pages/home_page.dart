@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
       childAspectRatio: 1.25,
       shrinkWrap: true,
       crossAxisCount: 4,
-      mainAxisSpacing: 2.0,
-      crossAxisSpacing: 2.0,
+      mainAxisSpacing: 1.0,
+      crossAxisSpacing: 1.0,
       children: [
         Container(
           color: _red,
