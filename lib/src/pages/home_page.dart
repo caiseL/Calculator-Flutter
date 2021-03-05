@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -8,19 +9,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
   void _actualiza() {
     setState(() {});
   }
 
   String _input = "";
-
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     return SafeArea(
       top: false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         drawer: Drawer(),
         appBar: AppBar(
           centerTitle: true,
@@ -29,10 +30,15 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              height: size.height * 0.25,
-              color: Colors.white,
-              child: Text(_input),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+              child: Container(
+                alignment: Alignment.centerRight,
+                height: size.height * 0.25,
+                color: Colors.white,
+                child:
+                    Text(_input, style: Theme.of(context).textTheme.headline3),
+              ),
             ),
             _buttons(),
           ],
@@ -42,7 +48,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buttons() {
-    final _buttonStyle = TextStyle(color: Colors.white, fontSize: 25.0);
     final _blue = Colors.blue;
     final _red = Colors.red;
 
@@ -62,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "C",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -85,7 +90,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "%",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -98,7 +103,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "/",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -111,7 +116,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "7",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -124,7 +129,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "8",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -137,7 +142,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "9",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -145,12 +150,12 @@ class _HomePageState extends State<HomePage> {
           color: _blue,
           child: TextButton(
             onPressed: () {
-              _input += "X";
+              _input += "x";
               _actualiza();
             },
             child: Text(
-              "X",
-              style: _buttonStyle,
+              "x",
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -163,7 +168,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "4",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -176,7 +181,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "5",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -189,7 +194,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "6",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -202,7 +207,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "-",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -215,7 +220,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "1",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -228,7 +233,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "2",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -241,7 +246,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "3",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -254,7 +259,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "+",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -267,7 +272,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               ".",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -280,7 +285,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "0",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -293,7 +298,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               "00",
-              style: _buttonStyle,
+              style: Theme.of(context).textTheme.button,
             ),
           ),
         ),
@@ -302,76 +307,35 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String multiplication(String number) {
-    var list = number.split("X");
-    double res = 1;
-    for (String number in list) {
-      res *= double.parse(number);
-    }
-    return res.toString();
-  }
-
-  String substraction(String number) {
-    var list = number.split("-");
-    double res = 0;
-    for (String number in list) {
-      res -= double.parse(number);
-    }
-    return res.toString();
-  }
-
-  String division(String number) {
-    var list = number.split("/");
-    double res = 1;
-    for (String number in list) {
-      res /= double.parse(number);
-    }
-
-    return res.toString();
-  }
-
   Widget _equals() {
     return Container(
       color: Colors.red,
       child: TextButton(
         onPressed: () {
           double res = 0;
+          String simb;
+          if (_input.contains("x")) {
+            int index = _input.indexOf("x");
+            res = (double.parse(_input.substring(0, index)) *
+                double.parse(_input.substring(index + 1, _input.length)));
+          } else if (_input.contains("-")) {
+            int index = _input.indexOf("-");
 
-          if (_input.contains("+") ||
-              _input.contains("X") ||
-              _input.contains("-") ||
-              _input.contains("/")) {
-            // check if _input contains one of these symbols
-            if (!_input.endsWith("+") ||
-                !_input.endsWith("X") ||
-                !_input.endsWith("-") ||
-                !_input.endsWith("/")) {
-              // if it ends with a symbol, you can't do anything
-              var list = _input.split("+");
-              for (String number in list) {
-                if (number.contains("-")) {
-                  number = substraction(number);
-                } else if (number.contains("/")) {
-                  number = division(number);
-                } else if (number.contains("X")) {
-                  number = multiplication(number);
-                }
-                res += double.parse(number);
-              }
-              print(list);
-            } else {
-              // Add a vibration
-              return "Can't";
-            }
+            res = (double.parse(_input.substring(0, index)) -
+                double.parse(_input.substring(index + 1, _input.length)));
+          } else if (_input.contains("+")) {
+            int index = _input.indexOf("+");
+
+            res = (double.parse(_input.substring(0, index)) -
+                double.parse(_input.substring(index + 1, _input.length)));
+          } else if (_input.contains("/")) {
+            int index = _input.indexOf("/");
+
+            res = (double.parse(_input.substring(0, index)) -
+                double.parse(_input.substring(index + 1, _input.length)));
           }
-          print(res);
-          if (res == res.roundToDouble()) {
-            // It's an integer
-            _input = res.round().toString(); // round it cause it's an integer
-          } else {
-            // It's a double
-            _input = res.toString();
-          }
+
+          _input = res.toString();
           _actualiza();
         },
         child: Text(
@@ -380,5 +344,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  String multiplicar(String input) {
+    // 9*9, regresa 81
   }
 }

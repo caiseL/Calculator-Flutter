@@ -14,6 +14,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color.fromARGB(255, 32, 32, 32),
         primarySwatch: Colors.grey,
+        textTheme: TextTheme(
+          button: TextStyle(color: Colors.white, fontSize: 25.0),
+          headline3: TextStyle(
+            backgroundColor: Colors.white,
+            fontSize: 38,
+            color: Color.fromARGB(255, 32, 32, 32),
+          ),
+        ),
       ),
       initialRoute: "/",
       routes: {
