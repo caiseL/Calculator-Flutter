@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
+import 'package:math_expressions/math_expressions.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -98,11 +99,11 @@ class _HomePageState extends State<HomePage> {
           color: _blue,
           child: TextButton(
             onPressed: () {
-              _input += "/";
+              _input += "÷";
               _actualiza();
             },
             child: Text(
-              "/",
+              "÷",
               style: Theme.of(context).textTheme.button,
             ),
           ),
@@ -150,11 +151,11 @@ class _HomePageState extends State<HomePage> {
           color: _blue,
           child: TextButton(
             onPressed: () {
-              _input += "x";
+              _input += "×";
               _actualiza();
             },
             child: Text(
-              "x",
+              "×",
               style: Theme.of(context).textTheme.button,
             ),
           ),
@@ -312,30 +313,7 @@ class _HomePageState extends State<HomePage> {
       color: Colors.red,
       child: TextButton(
         onPressed: () {
-          double res = 0;
-          String simb;
-          if (_input.contains("x")) {
-            int index = _input.indexOf("x");
-            res = (double.parse(_input.substring(0, index)) *
-                double.parse(_input.substring(index + 1, _input.length)));
-          } else if (_input.contains("-")) {
-            int index = _input.indexOf("-");
-
-            res = (double.parse(_input.substring(0, index)) -
-                double.parse(_input.substring(index + 1, _input.length)));
-          } else if (_input.contains("+")) {
-            int index = _input.indexOf("+");
-
-            res = (double.parse(_input.substring(0, index)) -
-                double.parse(_input.substring(index + 1, _input.length)));
-          } else if (_input.contains("/")) {
-            int index = _input.indexOf("/");
-
-            res = (double.parse(_input.substring(0, index)) -
-                double.parse(_input.substring(index + 1, _input.length)));
-          }
-
-          _input = res.toString();
+          getAnswer();
           _actualiza();
         },
         child: Text(
@@ -346,7 +324,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String multiplicar(String input) {
-    // 9*9, regresa 81
+  void getAnswer() {
+    _input = _input.replaceAll("×", "*");
+    _input = _input.replaceAll("÷", "/");
+    _input = _input.replaceAll("MOD", "%");
+
+    try {
+      Parser p = Parser();
+      Expression exp = p.parse(_input);
+
+      ContextModel cm = ContextModel();
+      _input = "${exp.evaluate(EvaluationType.REAL, cm)}";
+      formatNumber();
+    } catch (e) {
+      _input = "ERROR";
+    }
+  }
+
+  void formatNumber() {
+    double res = double.parse(_input);
+    NumberFormat f = NumberFormat("###,###,###");
+    if (res == res.roundToDouble()) {
+      // It's an integer
+      _input = f.format(res);
+    } else {
+      // it's a double
+      _input = res.toStringAsPrecision(5);
+    }
   }
 }
