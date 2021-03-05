@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
       top: false,
       child: Scaffold(
         backgroundColor: Colors.white,
-        drawer: Drawer(),
         appBar: AppBar(
           centerTitle: true,
           title: Text("Calculadora"),
