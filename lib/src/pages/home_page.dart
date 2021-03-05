@@ -10,8 +10,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void _actualiza() {
-    setState(() {});
+  void _buttonClicked() {
+    setState(() {
+      _input = _input.replaceAll(",", "");
+    });
   }
 
   String _input = "";
@@ -22,10 +24,11 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       top: false,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Calculadora"),
+          title: Text("Calculator"),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input = "";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "C",
@@ -76,9 +79,12 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input = _input.substring(0, _input.length - 1);
-              _actualiza();
+              _buttonClicked();
             },
-            child: Icon(Icons.delete),
+            child: Text(
+              "⌫",
+              style: Theme.of(context).textTheme.button,
+            ),
           ),
         ),
         Container(
@@ -86,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "MOD";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "%",
@@ -99,7 +105,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "÷";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "÷",
@@ -112,7 +118,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "7";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "7",
@@ -125,7 +131,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "8";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "8",
@@ -138,7 +144,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "9";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "9",
@@ -151,7 +157,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "×";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "×",
@@ -164,7 +170,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "4";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "4",
@@ -177,7 +183,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "5";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "5",
@@ -190,7 +196,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "6";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "6",
@@ -203,7 +209,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "-";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "-",
@@ -216,7 +222,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "1";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "1",
@@ -229,7 +235,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "2";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "2",
@@ -242,7 +248,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "3";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "3",
@@ -255,7 +261,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "+";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "+",
@@ -268,7 +274,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += ".";
-              _actualiza();
+              _buttonClicked(); // ?
             },
             child: Text(
               ".",
@@ -281,7 +287,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "0";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "0",
@@ -294,7 +300,7 @@ class _HomePageState extends State<HomePage> {
           child: TextButton(
             onPressed: () {
               _input += "00";
-              _actualiza();
+              _buttonClicked();
             },
             child: Text(
               "00",
@@ -313,7 +319,8 @@ class _HomePageState extends State<HomePage> {
       child: TextButton(
         onPressed: () {
           getAnswer();
-          _actualiza();
+          print(_input);
+          setState(() {});
         },
         child: Text(
           "=",
@@ -324,10 +331,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getAnswer() {
+    _input = _input.replaceAll(",", "");
     _input = _input.replaceAll("×", "*");
     _input = _input.replaceAll("÷", "/");
     _input = _input.replaceAll("MOD", "%");
-
+    _input = _input.replaceAll("-", "-");
+    _input = _input.replaceAll("+", "+");
+    print(_input);
     try {
       Parser p = Parser();
       Expression exp = p.parse(_input);
@@ -336,6 +346,7 @@ class _HomePageState extends State<HomePage> {
       _input = "${exp.evaluate(EvaluationType.REAL, cm)}";
       formatNumber();
     } catch (e) {
+      print(e);
       _input = "ERROR";
     }
   }
@@ -343,11 +354,12 @@ class _HomePageState extends State<HomePage> {
   void formatNumber() {
     double res = double.parse(_input);
     NumberFormat f = NumberFormat("###,###,###");
-    if (res == res.roundToDouble()) {
-      // It's an integer
+
+    if (res > 1000000000000) {
+      _input = res.toStringAsPrecision(5);
+    } else if (res == res.roundToDouble()) {
       _input = f.format(res);
     } else {
-      // it's a double
       _input = res.toStringAsPrecision(5);
     }
   }
