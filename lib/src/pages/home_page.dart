@@ -9,11 +9,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  String _input = "";
-
   void _actualiza() {
     setState(() {});
   }
+
+  String _input = "";
 
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -45,7 +45,6 @@ class _HomePageState extends State<HomePage> {
     final _buttonStyle = TextStyle(color: Colors.white, fontSize: 25.0);
     final _blue = Colors.blue;
     final _red = Colors.red;
-    bool equals = false;
 
     return GridView.count(
       childAspectRatio: 1.25,
@@ -303,71 +302,77 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  String multiplication(String number) {
+    var list = number.split("X");
+    double res = 1;
+    for (String number in list) {
+      res *= double.parse(number);
+    }
+    return res.toString();
+  }
+
+  String substraction(String number) {
+    var list = number.split("-");
+    double res = 0;
+    for (String number in list) {
+      res -= double.parse(number);
+    }
+    return res.toString();
+  }
+
+  String division(String number) {
+    var list = number.split("/");
+    double res = 1;
+    for (String number in list) {
+      res /= double.parse(number);
+    }
+
+    return res.toString();
+  }
+
   Widget _equals() {
     return Container(
       color: Colors.red,
       child: TextButton(
         onPressed: () {
-          double res = 1;
+          double res = 0;
 
-          if (_input.contains("+")) {
-            // Crear como un tipo de vibración o algo asi
-            if (!_input.endsWith("+")) {
+          if (_input.contains("+") ||
+              _input.contains("X") ||
+              _input.contains("-") ||
+              _input.contains("/")) {
+            // check if _input contains one of these symbols
+            if (!_input.endsWith("+") ||
+                !_input.endsWith("X") ||
+                !_input.endsWith("-") ||
+                !_input.endsWith("/")) {
+              // if it ends with a symbol, you can't do anything
               var list = _input.split("+");
-              print(list);
-              print(_input);
               for (String number in list) {
+                if (number.contains("-")) {
+                  number = substraction(number);
+                } else if (number.contains("/")) {
+                  number = division(number);
+                } else if (number.contains("X")) {
+                  number = multiplication(number);
+                }
                 res += double.parse(number);
               }
-              print(res);
-            }
-          } else {
-            return "Can't";
-          }
-
-          if (_input.contains("-")) {
-            // Crear como un tipo de vibración o algo asi
-            if (!_input.endsWith("-")) {
-              var list = _input.split("-");
               print(list);
-              print(_input);
-              for (String number in list) {
-                res -= double.parse(number);
-              }
-              print(res);
-            }
-          } else {
-            return "Can't";
-          }
-
-          if (_input.contains("/")) {
-            // Crear como un tipo de vibración o algo asi
-            if (!_input.endsWith("/")) {
-              var list = _input.split("/");
-              print(list);
-              print(_input);
-              for (String number in list) {
-                res /= double.parse(number);
-              }
-              print(res);
             } else {
+              // Add a vibration
               return "Can't";
             }
           }
-          if (_input.contains("X")) {
-            // Crear como un tipo de vibración o algo asi
-            if (!_input.endsWith("X")) {
-              var list = _input.split("X");
-              print(list);
-              print(_input);
-              for (String number in list) {
-                res *= double.parse(number);
-              }
-              print(res);
-            } else {
-              return "Can't";
-            }
+          print(res);
+          if (res == res.roundToDouble()) {
+            // It's an integer
+            _input = res.round().toString(); // round it cause it's an integer
+          } else {
+            // It's a double
+            _input = res.toString();
           }
+          _actualiza();
         },
         child: Text(
           "=",
